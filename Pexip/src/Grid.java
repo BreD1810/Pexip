@@ -62,4 +62,6 @@ public class Grid
         return contents.charAt(location + noRight);
     }
 
+    public int getRowLength() {return ROW_LENGTH;}
+
 }
