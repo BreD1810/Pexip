@@ -6,13 +6,13 @@ public class Grid
 {
 
     private String contents;
-    private int sideLength;
+    private final int ROW_LENGTH;
     private Map<Character, ArrayList<Integer>> charLocations = new HashMap<>();
 
     Grid(String input)
     {
         contents = input;
-        sideLength = Double.valueOf(Math.sqrt(input.length())).intValue();
+        ROW_LENGTH = Double.valueOf(Math.sqrt(input.length())).intValue();
         generateLocations();
     }
 
