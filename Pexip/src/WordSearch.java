@@ -45,12 +45,13 @@ public class WordSearch
 
     private boolean wordRight(String word, int location)
     {
-        for(int i = 1; i < word.length(); i++)
-        {
-            if(word.charAt(i) != grid.getCharRight(location, i))
-                return false;
-        }
-        return true;
+//        for(int i = 1; i < word.length(); i++)
+//        {
+//            if(word.charAt(i) != grid.getCharRight(location, i))
+//                return false;
+//        }
+//        return true;
+        return grid.checkWordRight(word, location);
     }
     
     private boolean wordDown(String word, int location)

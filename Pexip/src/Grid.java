@@ -62,6 +62,15 @@ public class Grid
         return contents.charAt(location + noRight);
     }
 
+    public boolean checkWordRight(String word, int location)
+    {
+        int endLocation = location + word.length() - 1;
+        if(endLocation > contents.length() || Math.round(location/ROW_LENGTH) != Math.round(endLocation/ROW_LENGTH) || !contents.substring(location,
+                endLocation+1).equals(word))
+            return false;
+        return true;
+    }
+
     public int getRowLength() {return ROW_LENGTH;}
 
 }
