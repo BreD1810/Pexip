@@ -57,7 +57,7 @@ public class Grid
     public char getCharRight(int location, int noRight)
     {
         int noLeftOnRow = (Math.round(location/ROW_LENGTH) + 1) * ROW_LENGTH - location - 1;
-        if(location < 0 || location > contents.length() || noRight < 1 || noRight > noLeftOnRow)
+        if(location < 0 || location > contents.length() || noRight < 1 || noRight > noLeftOnRow || (location + noRight) >= contents.length())
             return ' ';
         return contents.charAt(location + noRight);
     }
