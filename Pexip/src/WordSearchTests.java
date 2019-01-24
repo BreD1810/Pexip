@@ -4,14 +4,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class WordSearchTests
 {
 
+    private Grid smallGrid;
+
     @BeforeEach
     void setUp()
     {
+        String smallGridInput = "aaabccbbc";
+        smallGrid = new Grid(smallGridInput);
     }
 
     @AfterEach
@@ -22,18 +27,35 @@ public class WordSearchTests
     @Test
     void gridGeneration()
     {
-        String gridInput = "aabc";
-        Grid grid = new Grid(gridInput);
-        ArrayList<Integer> aLocations = new ArrayList<>();
-        aLocations.add(0);
-        aLocations.add(1);
-        ArrayList<Integer> bLocation = new ArrayList<>();
-        bLocation.add(2);
-        ArrayList<Integer> cLocation = new ArrayList<>();
-        cLocation.add(3);
-        assertEquals(aLocations, grid.getCharLocations('a'));
-        assertEquals(bLocation, grid.getCharLocations('b'));
-        assertEquals(cLocation, grid.getCharLocations('c'));
+        ArrayList<Integer> aLocations = new ArrayList<>(Arrays.asList(0, 1, 2));
+        ArrayList<Integer> bLocation = new ArrayList<>(Arrays.asList(3, 6, 7));
+        ArrayList<Integer> cLocation = new ArrayList<>(Arrays.asList(4, 5, 8));
+        assertEquals(aLocations, smallGrid.getCharLocations('a'));
+        assertEquals(bLocation, smallGrid.getCharLocations('b'));
+        assertEquals(cLocation, smallGrid.getCharLocations('c'));
+    }
+
+    @Test
+    void characterBelow()
+    {
+        assertEquals('c', smallGrid.getCharBelow(1, 1));
+        assertEquals('b', smallGrid.getCharBelow(1, 2));
+        assertEquals('b', smallGrid.getCharBelow(3, 1));
+        assertEquals(' ', smallGrid.getCharBelow(3, 2));
+        assertEquals(' ', smallGrid.getCharBelow(-1, 1));
+        assertEquals(' ', smallGrid.getCharBelow(3, -1));
+    }
+
+    @Test
+    void characterRight()
+    {
+        assertEquals('b', smallGrid.getCharRight(6, 1));
+        assertEquals('c', smallGrid.getCharRight(6, 2));
+        assertEquals('a', smallGrid.getCharRight(0, 2));
+        assertEquals(' ', smallGrid.getCharRight(2, 1));
+        assertEquals(' ', smallGrid.getCharRight(0, 3));
+        assertEquals(' ', smallGrid.getCharRight(-1, 1));
+        assertEquals(' ', smallGrid.getCharRight(1, -1));
     }
 
 }
