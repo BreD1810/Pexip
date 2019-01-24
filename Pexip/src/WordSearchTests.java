@@ -1,27 +1,22 @@
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class WordSearchTests
 {
 
     private Grid smallGrid;
+    private WordSearch smallGridSearch;
 
     @BeforeEach
     void setUp()
     {
-        String smallGridInput = "aaabccbbc";
-        smallGrid = new Grid(smallGridInput);
-    }
-
-    @AfterEach
-    void tearDown()
-    {
+        smallGrid = new Grid("aaabccbbc");
+        smallGridSearch = new WordSearch(smallGrid);
     }
 
     @Test
@@ -33,6 +28,7 @@ public class WordSearchTests
         assertEquals(aLocations, smallGrid.getCharLocations('a'));
         assertEquals(bLocation, smallGrid.getCharLocations('b'));
         assertEquals(cLocation, smallGrid.getCharLocations('c'));
+        assertNull(smallGrid.getCharLocations('d'));
     }
 
     @Test
@@ -56,6 +52,19 @@ public class WordSearchTests
         assertEquals(' ', smallGrid.getCharRight(0, 3));
         assertEquals(' ', smallGrid.getCharRight(-1, 1));
         assertEquals(' ', smallGrid.getCharRight(1, -1));
+    }
+
+    @Test
+    void smallGrid()
+    {
+        assertTrue(smallGridSearch.is_present("aaa"));
+        assertTrue(smallGridSearch.is_present("abb"));
+        assertTrue(smallGridSearch.is_present("acb"));
+        assertTrue(smallGridSearch.is_present("bc"));
+        assertTrue(smallGridSearch.is_present("a"));
+        assertFalse(smallGridSearch.is_present(""));
+        assertFalse(smallGridSearch.is_present("abc"));
+        assertFalse(smallGridSearch.is_present("accc"));
     }
 
 }
