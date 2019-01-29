@@ -56,7 +56,7 @@ Beyond this, I started running into issues where my computers 16GB of RAM was be
 
 Here are the results for running my final solution on my unit tests:
 
-![Unit test results](https://imgur.com/bmOjQMt)
+![Unit Test Results](https://i.imgur.com/bmOjQMt.png)
 
 Please note: There was an additional ~3 minute time to setup the grid to run these tests on.
 
