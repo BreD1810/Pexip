@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+/**
+ * Example implementation of how the WordSearch class will be used.
+ * Needs to be edited to include a proper grid and list of words to be searched for.
+ */
 public class Main
 {
 

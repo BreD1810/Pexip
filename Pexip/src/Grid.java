@@ -5,34 +5,34 @@ import java.util.Map;
 public class Grid
 {
 
-    private String contents;
-    public final int ROW_LENGTH;
-    private Map<String, ArrayList<Integer>> stringLocations = new HashMap<>();
+    private final String contents;
+    public final int ROW_LENGTH, GRID_LENGTH;
     public static final int INDEX_LIMIT = 3;
-    public final int GRID_LENGTH;
+    private Map<String, ArrayList<Integer>> stringLocations = new HashMap<>();
 
     Grid(String input)
     {
         contents = input;
         GRID_LENGTH = input.length();
-        ROW_LENGTH = Double.valueOf(Math.sqrt(GRID_LENGTH)).intValue();
+        ROW_LENGTH = Double.valueOf(Math.sqrt(GRID_LENGTH)).intValue(); //Assumes that the grid is square and correct
         generateLocations();
     }
 
     private void generateLocations()
     {
-        for(int i = 0; i < contents.length(); i++)
+        for(int i = 0; i < GRID_LENGTH; i++)
         {
             char currentChar = contents.charAt(i);
             StringBuilder rightString = new StringBuilder().append(currentChar);
             StringBuilder downString = new StringBuilder().append(currentChar);
             addLocation(String.valueOf(currentChar), i);
-            int rightPosition, downPosition;
+            int downPosition, leftOnRow;
 
             //Index substrings up to length INDEX_LIMIT
             for(int offset = 1; offset < INDEX_LIMIT; offset++)
             {
-                if(offset <= (Math.round(i/ROW_LENGTH) + 1) * ROW_LENGTH - i - 1 && (i + offset) < GRID_LENGTH)
+                leftOnRow = (Math.round(i/ROW_LENGTH) + 1) * ROW_LENGTH - i - 1;
+                if(offset <= leftOnRow && (i + offset) < GRID_LENGTH)
                 {
                     rightString.append(contents.charAt(i + offset));
                     addLocation(rightString.toString(), i);
@@ -51,6 +51,8 @@ public class Grid
 
     private void addLocation(String subWord, int location)
     {
+        //If the location already exists, and the string is less than INDEX_LIMIT, don't add.
+        //Create new array if it doesn't exist
         if(stringLocations.containsKey(subWord))
         {
             if(subWord.length() == INDEX_LIMIT)
@@ -64,7 +66,10 @@ public class Grid
         }
     }
 
-
+    /**
+     * @param string The string to be searched for
+     * @return An arraylist containing the locations of the input string within the grid
+     */
     public ArrayList<Integer> getStringLocations(String string) {return stringLocations.get(string);}
 
     /**
@@ -88,7 +93,7 @@ public class Grid
     public char getCharRight(int location, int noRight)
     {
         int noLeftOnRow = (Math.round(location/ROW_LENGTH) + 1) * ROW_LENGTH - location - 1;
-        if(location < 0 || location >= GRID_LENGTH || noRight < 0 || noRight > noLeftOnRow || (location + noRight) >= GRID_LENGTH)
+        if(location < 0 || noRight < 0 || noRight > noLeftOnRow || (location + noRight) >= GRID_LENGTH)
             return ' ';
         return contents.charAt(location + noRight);
     }

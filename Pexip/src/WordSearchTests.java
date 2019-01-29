@@ -96,36 +96,6 @@ public class WordSearchTests
         return word.toString();
     }
 
-    private boolean largeGridContains(String word)
-    {
-        if(largeGridString.contains(word))
-        {
-            int location = largeGridString.indexOf(word);
-            int noLeftOnRow = (Math.round(location/ROW_LENGTH) + 1) * ROW_LENGTH - location - 1;
-            if(noLeftOnRow >= word.length())
-            {
-                return true;
-            }
-        }
-
-        int nextLetterPosition;
-        ArrayList<Integer> possibleWordStarts = largeGrid.getStringLocations(word.substring(0, Grid.INDEX_LIMIT));
-        for(int position : possibleWordStarts)
-        {
-            for(int i = 1; i < word.length(); i++)
-            {
-                nextLetterPosition = position + (i * ROW_LENGTH);
-                if(nextLetterPosition >= largeGridString.length() || !(largeGridString.charAt(nextLetterPosition) == word.charAt(i)))
-                    break;
-                if(i == word.length()-1)
-                    return true;
-            }
-        }
-
-        return false;
-    }
-
-    //"aaabccbbc"
     @Test
     void gridGeneration()
     {
@@ -161,10 +131,6 @@ public class WordSearchTests
         assertEquals(' ', smallGrid.getCharRight(1, -1));
         assertEquals(' ', smallGrid.getCharRight(8, 1));
         assertEquals(' ', smallGrid.getCharRight(9, 1));
-//        assertTrue(smallGrid.check("aaa", 0));
-//        assertTrue(smallGrid.checkWordRight("aa", 1));
-//        assertFalse(smallGrid.checkWordRight("aa", 2));
-//        assertFalse(smallGrid.checkWordRight("aa", 3));
     }
 
     @Test
