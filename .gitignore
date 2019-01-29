@@ -24,7 +24,11 @@ hs_err_pid*
 #Ignore .idea
 .idea/
 .out/
+.out/*
 *.iml
 
 # PDF
 *.pdf
+
+# Pexip
+Pexip/out/
