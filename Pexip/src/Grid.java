@@ -32,7 +32,7 @@ public class Grid
             //Index substrings up to length INDEX_LIMIT
             for(int offset = 1; offset < INDEX_LIMIT; offset++)
             {
-                if(offset <= (Math.round(i/ROW_LENGTH) + 1) * ROW_LENGTH - i - 1)
+                if(offset <= (Math.round(i/ROW_LENGTH) + 1) * ROW_LENGTH - i - 1 && (i + offset) < GRID_LENGTH)
                 {
                     rightString.append(contents.charAt(i + offset));
                     addLocation(rightString.toString(), i);
