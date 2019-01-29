@@ -53,7 +53,8 @@ public class Grid
     {
         if(stringLocations.containsKey(subWord))
         {
-            stringLocations.get(subWord).add(location);
+            if(subWord.length() == INDEX_LIMIT)
+                stringLocations.get(subWord).add(location);
         }
         else
         {
