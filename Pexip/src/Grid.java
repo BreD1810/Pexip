@@ -6,13 +6,16 @@ public class Grid
 {
 
     private String contents;
-    private final int ROW_LENGTH;
-    private Map<Character, ArrayList<Integer>> charLocations = new HashMap<>();
+    public final int ROW_LENGTH;
+    private Map<String, ArrayList<Integer>> stringLocations = new HashMap<>();
+    public static final int INDEX_LIMIT = 2;
+    public final int GRID_LENGTH;
 
     Grid(String input)
     {
         contents = input;
-        ROW_LENGTH = Double.valueOf(Math.sqrt(input.length())).intValue();
+        GRID_LENGTH = input.length();
+        ROW_LENGTH = Double.valueOf(Math.sqrt(GRID_LENGTH)).intValue();
         generateLocations();
     }
 
@@ -21,20 +24,47 @@ public class Grid
         for(int i = 0; i < contents.length(); i++)
         {
             char currentChar = contents.charAt(i);
-            if(charLocations.containsKey(currentChar))
+            StringBuilder rightString = new StringBuilder().append(currentChar);
+            StringBuilder downString = new StringBuilder().append(currentChar);
+            addLocation(String.valueOf(currentChar), i);
+            int rightPosition, downPosition;
+
+            //Index substrings up to length INDEX_LIMIT
+            for(int offset = 1; offset < INDEX_LIMIT; offset++)
             {
-                charLocations.get(currentChar).add(i);
+                if(offset <= (Math.round(i/ROW_LENGTH) + 1) * ROW_LENGTH - i - 1)
+                {
+                    rightString.append(contents.charAt(i + offset));
+                    addLocation(rightString.toString(), i);
+                }
+                
+                downPosition = i + (offset * ROW_LENGTH);
+                if(downPosition < GRID_LENGTH)
+                {
+                    downString.append(contents.charAt(downPosition));
+                    addLocation(downString.toString(), i);
+                }
             }
-            else
-            {
-                ArrayList<Integer> locationList = new ArrayList<>();
-                locationList.add(i);
-                charLocations.put(currentChar, locationList);
-            }
+
         }
     }
 
-    public ArrayList<Integer> getCharLocations(char character) {return charLocations.get(character);}
+    private void addLocation(String subWord, int location)
+    {
+        if(stringLocations.containsKey(subWord))
+        {
+            stringLocations.get(subWord).add(location);
+        }
+        else
+        {
+            ArrayList<Integer> locationList = new ArrayList<>();
+            locationList.add(location);
+            stringLocations.put(subWord, locationList);
+        }
+    }
+
+
+    public ArrayList<Integer> getStringLocations(String string) {return stringLocations.get(string);}
 
     /**
      * @param location The location of the character being queried
@@ -44,7 +74,7 @@ public class Grid
     public char getCharBelow(int location, int noBelow)
     {
         int position = location + (noBelow * ROW_LENGTH);
-        if(location < 0 || location > contents.length() || noBelow < 1 || position >= contents.length())
+        if(location < 0 || location >= contents.length() || noBelow < 0 || position >= contents.length())
             return ' ';
         return contents.charAt(position);
     }
@@ -57,20 +87,20 @@ public class Grid
     public char getCharRight(int location, int noRight)
     {
         int noLeftOnRow = (Math.round(location/ROW_LENGTH) + 1) * ROW_LENGTH - location - 1;
-        if(location < 0 || location > contents.length() || noRight < 1 || noRight > noLeftOnRow || (location + noRight) >= contents.length())
+        if(location < 0 || location >= contents.length() || noRight < 0 || noRight > noLeftOnRow || (location + noRight) >= contents.length())
             return ' ';
         return contents.charAt(location + noRight);
     }
 
-    public boolean checkWordRight(String word, int location)
-    {
-        int endLocation = location + word.length() - 1;
-        if(endLocation > contents.length() || Math.round(location/ROW_LENGTH) != Math.round(endLocation/ROW_LENGTH) || !contents.substring(location,
-                endLocation+1).equals(word))
-            return false;
-        return true;
-    }
-
-    public int getRowLength() {return ROW_LENGTH;}
+    //From testing, this is slower than getCharRight ?
+//    public boolean checkWordRight(String word, int location)
+//    {
+//        int endLocation = location + word.length() - 1;
+//        if(endLocation >= contents.length() || Math.round(location/ROW_LENGTH) != Math.round
+//        (endLocation/ROW_LENGTH) || !contents.substring(location,
+//                endLocation+1).equals(word))
+//            return false;
+//        return true;
+//    }
 
 }

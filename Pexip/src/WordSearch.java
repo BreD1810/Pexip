@@ -14,11 +14,15 @@ public class WordSearch
         if(!isValidWord(word))
             return false;
 
-        if(word.length() == 1)
-            return containsCharacter(word.charAt(0));
+        if(word.length() <= Grid.INDEX_LIMIT)
+            return containsString(word);
 
-        ArrayList<Integer> firstCharLocations = grid.getCharLocations(word.charAt(0));
-        for(int location:firstCharLocations)
+
+        ArrayList<Integer> beginningLocations = grid.getStringLocations(word.substring(0, Grid.INDEX_LIMIT));
+        if(beginningLocations == null)
+            return false;
+
+        for(int location:beginningLocations)
         {
             if(wordRight(word, location) || wordDown(word, location))
                 return true;
@@ -29,7 +33,7 @@ public class WordSearch
 
     private boolean isValidWord(String word)
     {
-        if (word.length() < 1 || word.length() > grid.getRowLength())
+        if (word.length() < 1 || word.length() > grid.ROW_LENGTH)
             return false;
 
         for(char character:word.toCharArray())
@@ -41,22 +45,21 @@ public class WordSearch
         return true;
     }
 
-    private boolean containsCharacter(char character) {return grid.getCharLocations(character) != null;}
+    private boolean containsString(String string) {return grid.getStringLocations(string) != null;}
 
     private boolean wordRight(String word, int location)
     {
-//        for(int i = 1; i < word.length(); i++)
-//        {
-//            if(word.charAt(i) != grid.getCharRight(location, i))
-//                return false;
-//        }
-//        return true;
-        return grid.checkWordRight(word, location);
+        for(int i = 0; i < word.length(); i++)
+        {
+            if(word.charAt(i) != grid.getCharRight(location, i))
+                return false;
+        }
+        return true;
     }
     
     private boolean wordDown(String word, int location)
     {
-        for(int i = 1; i < word.length(); i++)
+        for(int i = 0; i < word.length(); i++)
         {
             if(word.charAt(i) != grid.getCharBelow(location, i))
                 return false;

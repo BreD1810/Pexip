@@ -24,7 +24,7 @@ public class WordSearchTests
         smallGridSearch = new WordSearch(smallGrid);
         largeGrid = generateLargeGrid();
         largeGridSearch = new WordSearch(largeGrid);
-        words = generateWords();
+//        words = generateWords();
     }
 
     private static Grid generateLargeGrid()
@@ -46,7 +46,6 @@ public class WordSearchTests
         gridString.insert(position, "testwords");
 
         //"correctword" going down in a valid position
-        //Length 11
         String word = "correctword";
         position = rand.nextInt(ROW_LENGTH * ROW_LENGTH);
         while(position + (11 * ROW_LENGTH) > (ROW_LENGTH * ROW_LENGTH))
@@ -110,7 +109,7 @@ public class WordSearchTests
         }
 
         int nextLetterPosition;
-        ArrayList<Integer> possibleWordStarts = largeGrid.getCharLocations(word.charAt(0));
+        ArrayList<Integer> possibleWordStarts = largeGrid.getStringLocations(word.substring(0, Grid.INDEX_LIMIT));
         for(int position : possibleWordStarts)
         {
             for(int i = 1; i < word.length(); i++)
@@ -126,16 +125,19 @@ public class WordSearchTests
         return false;
     }
 
+    //"aaabccbbc"
     @Test
     void gridGeneration()
     {
-        ArrayList<Integer> aLocations = new ArrayList<>(Arrays.asList(0, 1, 2));
-        ArrayList<Integer> bLocation = new ArrayList<>(Arrays.asList(3, 6, 7));
-        ArrayList<Integer> cLocation = new ArrayList<>(Arrays.asList(4, 5, 8));
-        assertEquals(aLocations, smallGrid.getCharLocations('a'));
-        assertEquals(bLocation, smallGrid.getCharLocations('b'));
-        assertEquals(cLocation, smallGrid.getCharLocations('c'));
-        assertNull(smallGrid.getCharLocations('d'));
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1, 2)), smallGrid.getStringLocations("a"));
+        assertEquals(new ArrayList<>(Arrays.asList(3, 6, 7)), smallGrid.getStringLocations("b"));
+        assertEquals(new ArrayList<>(Arrays.asList(4, 5, 8)), smallGrid.getStringLocations("c"));
+//        assertEquals(new ArrayList<>(Arrays.asList(0)), smallGrid.getStringLocations("aaa"));
+        assertNull(smallGrid.getStringLocations("aaa"));
+        assertEquals(new ArrayList<>(Arrays.asList(0, 1)), smallGrid.getStringLocations("aa"));
+//        assertEquals(new ArrayList<>(Arrays.asList(0)), smallGrid.getStringLocations("abb"));
+        assertNull(smallGrid.getStringLocations("aaaa"));
+        assertNull(smallGrid.getStringLocations("d"));
     }
 
     @Test
@@ -161,10 +163,10 @@ public class WordSearchTests
         assertEquals(' ', smallGrid.getCharRight(1, -1));
         assertEquals(' ', smallGrid.getCharRight(8, 1));
         assertEquals(' ', smallGrid.getCharRight(9, 1));
-        assertTrue(smallGrid.checkWordRight("aaa", 0));
-        assertTrue(smallGrid.checkWordRight("aa", 1));
-        assertFalse(smallGrid.checkWordRight("aa", 2));
-        assertFalse(smallGrid.checkWordRight("aa", 3));
+//        assertTrue(smallGrid.check("aaa", 0));
+//        assertTrue(smallGrid.checkWordRight("aa", 1));
+//        assertFalse(smallGrid.checkWordRight("aa", 2));
+//        assertFalse(smallGrid.checkWordRight("aa", 3));
     }
 
     @Test
