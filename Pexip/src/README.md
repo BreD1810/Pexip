@@ -32,3 +32,32 @@ might be a better idea! Instead look at the algorithm side of things.
 
 As a bonus question: how would you go about taking advantage of a multicore system?
 1
+
+## Comments on My Solution
+My solution is to index the grid by characters. Currently, in the `Grid` class, there is a constant called `INDEX_LIMIT`. Editing this will change the number of characters that will be indexed right and down from each location in the grid. For example, in the grid
+```
+a b c
+d e f
+g h i
+```
+for position 0, 0 will be added to the list of `a`, `ab` and `ad` using `INDEX_LIMIT = 2`. When a word is less than or equal to `INDEX_LIMIT`, the existence of a list is checked. When a longer word is searched for, the begining of the word is considered to select the correct list. Then positions within that list are then searched for the word. If the word is found, `true` is returned, if the end of the list is reached without a match, `false` is returned.
+
+I have written some unit tests for my code. This helped me to determine if parts of my code were working as intended. It also allowed me to test the speed of my solution.
+
+I had to increase the maximum heap space of my JVM to run these solutions. This involved using the `-Xmx` parameter. Currently, I have concluded the following running times for the large grid on my pc:
+
+| Index Length | Average time for 1 word |
+| --- | ---|
+| 1 | 75ms |
+| 2 | 25ms |
+| 3 | 5ms |
+
+Beyond this, I started running into issues where my computers 16GB of RAM was being exceeded, and the run time was being affected by virtual memory usage (leading to huge increases in search times per word, reaching up to 7 seconds). Therefore, I chose to leave my final implementation as a 3 character index. 
+
+Here are the results for running my final solution on my unit tests:
+
+![Unit test results](https://imgur.com/bmOjQMt)
+
+Please note: There was an additional ~3 minute time to setup the grid to run these tests on.
+
+In conclusion, with my solution there is a tradeoff between memory usage, grid generation time and search time. A higher `index_limit` will result in a higher memory usage, and a longer generation time. However, for a large set of words, the longer generation time may be much shorter than the time spent to search for all of the words. In the example, you would ideally like to index 9 characters, as this is the average length of words, and therefore massively increase the search speeds. I could improve my solution by finding a way to reduce my memory usage.
