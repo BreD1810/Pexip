@@ -8,7 +8,7 @@ public class Grid
     private String contents;
     public final int ROW_LENGTH;
     private Map<String, ArrayList<Integer>> stringLocations = new HashMap<>();
-    public static final int INDEX_LIMIT = 2;
+    public static final int INDEX_LIMIT = 3;
     public final int GRID_LENGTH;
 
     Grid(String input)
@@ -74,7 +74,7 @@ public class Grid
     public char getCharBelow(int location, int noBelow)
     {
         int position = location + (noBelow * ROW_LENGTH);
-        if(location < 0 || location >= contents.length() || noBelow < 0 || position >= contents.length())
+        if(location < 0 || location >= GRID_LENGTH || noBelow < 0 || position >= GRID_LENGTH)
             return ' ';
         return contents.charAt(position);
     }
@@ -87,7 +87,7 @@ public class Grid
     public char getCharRight(int location, int noRight)
     {
         int noLeftOnRow = (Math.round(location/ROW_LENGTH) + 1) * ROW_LENGTH - location - 1;
-        if(location < 0 || location >= contents.length() || noRight < 0 || noRight > noLeftOnRow || (location + noRight) >= contents.length())
+        if(location < 0 || location >= GRID_LENGTH || noRight < 0 || noRight > noLeftOnRow || (location + noRight) >= GRID_LENGTH)
             return ' ';
         return contents.charAt(location + noRight);
     }
