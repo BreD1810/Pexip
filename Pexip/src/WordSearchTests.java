@@ -24,7 +24,7 @@ public class WordSearchTests
         smallGridSearch = new WordSearch(smallGrid);
         largeGrid = generateLargeGrid();
         largeGridSearch = new WordSearch(largeGrid);
-//        words = generateWords();
+        words = generateWords();
     }
 
     private static Grid generateLargeGrid()
