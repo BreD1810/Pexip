@@ -1,8 +1,14 @@
-<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-</dependencies>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.bred1810.jobInterviews</groupId>
+  <artifactId>pexip</artifactId>
+  <version>1</version>
+  <dependencies>
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  			<version>4.12</version>
+  			<scope>test</scope>
+  		</dependency>
+  </dependencies>
+</project>
