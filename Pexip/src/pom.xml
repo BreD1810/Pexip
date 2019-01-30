@@ -11,4 +11,7 @@
   			<scope>test</scope>
   		</dependency>
   </dependencies>
+  <includes>
+      <include>**/WordSearcgTests.java</include>
+  </includes>
 </project>
