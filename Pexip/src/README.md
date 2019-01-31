@@ -35,19 +35,19 @@ As a bonus question: how would you go about taking advantage of a multicore syst
 
 
 ## Comments on My Solution
-My solution is to index the grid by characters. Currently, in the `Grid` class, there is a constant called `INDEX_LIMIT`. Editing this will change the number of characters that will be indexed right and down from each location in the grid. For example, in the grid
+My solution is to index the grid by a set length of characters. Currently, in the `Grid` class, there is a constant called `INDEX_LIMIT`. Editing this will change the number of characters that will be indexed right and down from each location in the grid (inclusively). For example, in the grid
 ```
 a b c
 d e f
 g h i
 ```
-for position 0, 0 will be added to the list of `a`, `ab` and `ad` using `INDEX_LIMIT = 2`. When a word is less than or equal to `INDEX_LIMIT`, the existence of a list is checked. When a longer word is searched for, the begining of the word is considered to select the correct list. Then positions within that list are then searched for the word. If the word is found, `true` is returned, if the end of the list is reached without a match, `false` is returned.
+position 0 will be added to the list of `a`, `ab` and `ad` using `INDEX_LIMIT = 2`. When a word is less than or equal to `INDEX_LIMIT`, the existence of a list is checked. When a longer word is searched for, the begining of the word is considered to select the correct list. Then positions within that list are then searched for the word. If the word is found, `true` is returned, if the end of the list is reached without a match, `false` is returned.
 
-I have written some unit tests for my code. This helped me to determine if parts of my code were working as intended. It also allowed me to test the speed of my solution.
+I have written some unit tests for my code. This helped me to determine if parts of my code were working as intended. A reduced test suite is run remotely on Azure Devops when I push my code to GitHub, whereas a I can run a full test suite locally on my machine. This allowed me to test the speed of my solution on the large scale problem locally, whilst also having some functionality tests on a small scale problem online.
 
-I had to increase the maximum heap space of my JVM to run these solutions. This involved using the `-Xmx` parameter. Currently, I have concluded the following running times for the large grid on my pc:
+I had to increase the maximum heap space of my JVM to run the large problem from the spec. This involved using the `-Xmx` parameter. Currently, I have concluded the following running times for the large grid on my pc:
 
-| Index Length | Average time for 1 word |
+| Index Length | Average time to find 1 word |
 | --- | ---|
 | 1 | 75ms |
 | 2 | 25ms |
@@ -66,6 +66,6 @@ In conclusion, with my solution there is a tradeoff between memory usage, grid g
 ## Extension
 For my solution, you could use multithreading to increase the speed of the grid generation. For example, you could create a list of integers representing each character in the grid that still needs to be indexed. You could then create several threads that take a value from this list, and delete it from the list. The thread then goes to that position in the grid, and then index characters as normal.
 
-To make this thread safe, the method to read and remove the position from the list should be `synchronised`, which stops 2 threads from indexing the same position. The read/write to the `HashSet` storing the indexes should also be locked. This stops any accidental overwriting of the indexes which could lead to words being missed.
+To make this thread safe, the method to read and remove the position from the list should be `synchronised`, which stops 2 threads from indexing the same position. The read/write to the `HashSet` storing the indexes should also be locked. This stops any accidental overwriting of the indexes which could lead to words being missed, or duplicate lists.
 
 The part of the code which runs through the list of words could also be multithreaded. To do this, threads should check single words each. The list should be locked whenever it is accessed/removed from, and the word being searched for should be removed from the list. This should increase the speed that words are searched for within the grid.
