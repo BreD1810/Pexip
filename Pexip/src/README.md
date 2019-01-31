@@ -1,5 +1,6 @@
 Word Search
 --
+[![Build Status](https://dev.azure.com/bred1810/Pexip/_apis/build/status/BreD1810.Job-Interviews?branchName=master)](https://dev.azure.com/bred1810/Pexip/_build/latest?definitionId=5&branchName=master)
 
 Your task is to produce a solution to a word search problem; this is the sort of thing printed in crossword magazines and so on. You’re given a grid of letters and have to find a word which appears horizontally or vertically in the grid. The grid consists only of the 26 letters in the range a…z and the words are not dictionary words, just random collections of up to 24 characters with an average length of 9 characters. There’s nothing special in those values, they’re just based on the corresponding values from `/usr/share/dict/words` on my computer.
 
