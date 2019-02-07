@@ -13,7 +13,7 @@ pool:
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'Pexip/pom.xml'
+    mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx12288m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
